@@ -188,8 +188,8 @@ for epoch in range(41, 46):
     for batch in train_loader:
         optimizer.zero_grad()
         inputs, labels = batch
-        outputs = model(**batch)  # 前向傳播
-        #outputs = model(inputs['input_ids'], inputs['attention_mask'])  # 前向傳播
+        #outputs = model(**batch)  # 前向傳播
+        outputs = model(inputs['input_ids'], inputs['attention_mask'])  # 前向傳播(因為Dataloader中只包含 inputs 及 encoded_labels)
         loss = nn.CrossEntropyLoss()(outputs, labels)
         loss.backward()
         optimizer.step()
