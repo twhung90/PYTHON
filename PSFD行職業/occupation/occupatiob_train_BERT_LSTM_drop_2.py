@@ -153,12 +153,12 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()  # 清除梯度
         
         inputs, labels = batch
-        
-        outputs = model(**batch)  # 前向傳播
+
         '''
-        model(**batch)等價於model.forward(input_ids=batch['input_ids'], attention_mask=batch['attention_mask'], labels=batch['labels'])
+        outputs = model(**batch)  # 前向傳播(多用於訓練語料情況下)
+        model(**batch)等同於model.forward(input_ids=batch['input_ids'], attention_mask=batch['attention_mask'], labels=batch['labels'])
         '''
-        # outputs = model(inputs['input_ids'], inputs['attention_mask'])  # 前向傳播(則多用於測試階段，因為 labels 在推論時通常不需要)
+        outputs = model(inputs['input_ids'], inputs['attention_mask'])  # 前向傳播(多用於推論模型，因為 labels 在推論時通常不需要)
         
         loss_fct = nn.CrossEntropyLoss()
         loss = loss_fct(outputs, labels)  # 獲取損失值
